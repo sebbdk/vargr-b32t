@@ -1,21 +1,22 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import { getCompressionState } from '../../services/compress.js';
+import { getCompressionState, archive } from '../../services/archive.js';
 
-export function startAPIServer({ port = 3000, archive } = {}) {
+export function startAPIServer({ port = 3000 } = {}) {
     const app = new Koa();
     const router = new KoaRouter();
 
     router.get('/archive/run', (ctx, next) => {
-        if (getCompressionState().status === 'inactive') {
-            archive();
-            ctx.body = JSON.stringify(getCompressionState());
-            return;
+        const from = getConfigState().backup.from;
+        const to = getConfigState().backup.to + '/test.zip'
+
+        try {
+            archive(from, to);
+        } catch(err) {
+            ctx.body = JSON.stringify({ error: err.toString() });
         }
 
-        ctx.body = JSON.stringify({
-            error: 'Only one archive can be made at a time.'
-        });
+        ctx.body = JSON.stringify(getCompressionState());
     });
 
     router.get('/archive/info', (ctx, next) => {

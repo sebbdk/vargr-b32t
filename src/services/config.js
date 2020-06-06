@@ -10,11 +10,12 @@ let state = {
         level: 9 // Sets the compression level.
     },
     backup: {
-        from: './data',
-        to: '',
+        from: './data/from',
+        to: './data/to',
         intervals: 24 * 60 * 60, // 24 hours
         time: 0, // seconds since the day starts
         lastBackupTime: 0, // Timestamp
+        count: 0,
         backupCount: 3,
         type: 'full', // will support sync and combi later
     }

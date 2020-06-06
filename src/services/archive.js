@@ -1,5 +1,6 @@
 import fs from 'fs';
 import archiver from 'archiver'
+import { getConfigState } from './config';
 
 let state = {
     status: 'inactive',
@@ -26,11 +27,17 @@ export function log(type, msg) {
     })
 }
 
-export function compress(from, to, state) {
+export function archive(from, to) {
+    if (getCompressionState().status === 'inactive') {
+        throw(new Error('Can only run one compression at a time.'));
+    }
+
     // create a file to stream archive data to.
     var output = fs.createWriteStream(to);
     var archive = archiver('zip', {
-        zlib: { level: 9 } // Sets the compression level.
+        zlib: {
+            level: getConfigState().compression.level // Sets the compression level.
+        }
     });
 
     // listen for all archive data to be written

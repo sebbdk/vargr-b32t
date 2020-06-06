@@ -1,3 +1,7 @@
 test_files
 node_modules
 .DS_Store
+data/from
+data/to
+.cache
+dist

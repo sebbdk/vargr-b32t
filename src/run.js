@@ -16,9 +16,7 @@ import { compress } from './services/compress.js';
 // So zip does not hog al lthe CPU while doing backup
 
 export function run() {
-    startAPIServer({
-        archive: () => compress('./test_files', 'test.zip')
-    });
+    startAPIServer();
     //const samba = sambaConnect(sharePath, username, password);
     //console.log(samba);
 

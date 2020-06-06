@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./index.js",
-    "test": "test"
+    "test": "test",
+    "gui-dev": "parcel -p 3000 watch  src/gui/index.html"
   },
   "keywords": [
     "rsync",
@@ -18,7 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "archiver": "^4.0.1",
+    "jsx": "^0.9.89",
     "onezip": "^4.2.0",
+    "parcel-bundler": "^1.12.4",
     "samba-client": "^3.2.0",
     "zip-a-folder": "^0.0.12"
   }
