@@ -6,6 +6,9 @@ Mean for server backup in a home setting.
 ## Preview
 ![image](https://user-images.githubusercontent.com/870110/83979889-ec2afd80-a911-11ea-9eb8-47917e01e071.png)
 
+# Questions
+ * Use tag for continues compression? (https://www.brendanlong.com/zip-vs-tar-for-compressed-archives.html)
+
 # Next up
  * Test compress large directory
  * Make progress bar work
