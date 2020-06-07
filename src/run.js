@@ -1,10 +1,4 @@
-import { startAPIServer } from './servers/api/index.js';
-import { startGUIServer } from './servers/gui/index.js';
-
-import { transferFileWithSamba } from './services/samba.js';
-import { compress } from './services/compress.js';
-
-
+import { startAPIServer } from './servers/api.js';
 
 // Mount network drive
     // handle fail gracefully

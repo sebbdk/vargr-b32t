@@ -1,36 +1,40 @@
 import fs from 'fs';
 import archiver from 'archiver'
-import { getConfigState } from './config';
-
-let state = {
-    status: 'inactive',
-    logs: []
-};
+import { getConfigState, setConfigState } from './config.js';
 
 export function getCompressionState() {
-    return state;
+    return getConfigState().compression;
 }
 
 export function setCompressionState(newState) {
-    state = {
-        ...state,
-        ...newState
-    }
+    setConfigState({
+        compression: {
+            ...getCompressionState(),
+            ...newState
+        }
+    });
 }
 
 export function log(type, msg) {
     setCompressionState({
         logs: [
-            { type, msg },
+            {
+                type,
+                msg,
+                time: Math.round((new Date()).getTime() / 1000)
+            },
             ...getCompressionState().logs
         ]
     })
 }
 
 export function archive(from, to) {
-    if (getCompressionState().status === 'inactive') {
+    if (getCompressionState().status !== 'inactive') {
+        log('error', 'Can only run once archiving process at a time!');
         throw(new Error('Can only run one compression at a time.'));
     }
+
+    log('info', 'Started compression: "' + from + '" to "' + to + '"');
 
     // create a file to stream archive data to.
     var output = fs.createWriteStream(to);
@@ -43,7 +47,7 @@ export function archive(from, to) {
     // listen for all archive data to be written
     // 'close' event is fired only when a file descriptor is involved
     output.on('close', function() {
-        log('info', 'completed writing file');
+        log('info', 'Completed compressing: "' + to + '"');
         setCompressionState({ status: 'inactive' });
         console.log(archive.pointer() + ' total bytes');
         console.log('archiver has been finalized and the output file descriptor has closed.');
@@ -77,9 +81,6 @@ export function archive(from, to) {
                 ...entry.fs
             }
         })
-        //const pct = Math.round(entry.entries.processed / entry.entries.total * 100);
-        //const count = `${entry.entries.processed} / ${entry.entries.total}`;
-        console.log(entry)
     });
 
     // good practice to catch this error explicitly

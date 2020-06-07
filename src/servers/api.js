@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import { getCompressionState, archive } from '../../services/archive.js';
-import { getConfigState, resetConfig } from '../../services/config.js';
+import { getCompressionState, archive } from '../services/archive.js';
+import { getConfigState, resetConfig } from '../services/config.js';
 
 export function startAPIServer({ port = 3001 } = {}) {
     const app = new Koa();
@@ -30,8 +30,8 @@ export function startAPIServer({ port = 3001 } = {}) {
 
     router.get('/config/reset', (ctx, next) => {
         ctx.set('Content-Type', 'application/json');
-
-        ctx.body = JSON.stringify(resetConfig());
+        resetConfig();
+        ctx.body = JSON.stringify(getConfigState());
     });
 
     router.get('/archive/configure', (ctx, next) => {

@@ -4,7 +4,56 @@
         <title>B32T Backup</title>
     </head>
     <body>
-        <app></app>
+        <h1>B32T Backup <small>(Alpha)</small></h1>
+        <div class="main">
+            <div class="status"></div>
+            <div class="actions multi-button">
+                <button id="backup-btn">Backup</button>
+                <button id="transfer-btn">Transfer</button>
+            </div>
+
+            <h3>Logs</h3>
+            <div class="logs"></div>
+
+            <h3>Backup list</h3>
+            <div class="backups">
+                <div class="log log-backup"> <span class="name">full_02_07_06_2020.zip</span> - <span class="waiting">Queued</span> <span class="time">- 5 minutes ago</div>
+                <div class="log log-backup"> <span class="name">full_01_07_06_2020.zip</span> - <span class="transfered">Transfered</span> <span class="time">- 5 minutes ago</div>
+            </div>
+
+            <h3>Configure</h3>
+            <div>
+                <div class="config">
+                    <div class="config-field">
+                        <label>Samba address</label>
+                        <input type="text" name="address" placeholder="Samba address" />
+                    </div>
+                    <div class="config-field">
+                        <label>Network domain</label>
+                        <input type="text" name="domain" placeholder="Samba domain" />
+                    </div>
+                    <div class="config-field">
+                        <label>Samba Username</label>
+                        <input type="text" name="username" placeholder="Samba username (optional)" />
+                    </div>
+                    <div class="config-field">
+                        <label>Samba password</label>
+                        <input type="text" name="password" placeholder="Samba password (optional)" />
+                    </div>
+
+                    <div class="multi-button">
+                        <button id="update-btn">Update</button>
+                        <button id="reset-btn">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <b>Debug state</b>
+            <pre id="state"></pre>
+        <div>
+
+        <link rel="stylesheet" href="styles.css">
         <script src="index.js"></script>
     </body>
 </html>

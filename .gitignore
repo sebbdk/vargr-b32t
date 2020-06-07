@@ -5,3 +5,5 @@ data/from
 data/to
 .cache
 dist
+data/config.json
+yarn-error.log
