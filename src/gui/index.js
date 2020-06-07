@@ -25,8 +25,9 @@ function renderLogs(info) {
 }
 function renderStatus(info) {
     const map = {
-        inactive: 'Currently inactive',
-        started: 'Running archiver...'
+        inactive: 'Inactive',
+        archiving: 'Running archiver...',
+        transfering: 'Transfering files to samba share...'
     }
 
     document.querySelector('.status').innerHTML = `

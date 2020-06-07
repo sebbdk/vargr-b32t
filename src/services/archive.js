@@ -93,5 +93,5 @@ export function archive(from, to) {
 
     archive.finalize();
 
-    setCompressionState({ status: 'started' });
+    setCompressionState({ status: 'archiving' });
 }
