@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
-import { getCompressionState, archive } from '../services/archive.js';
+import { getCompressionState, archive, getLocalArchives } from '../services/archive.js';
 import { getConfigState, resetConfig } from '../services/config.js';
 
 export function startAPIServer({ port = 3001 } = {}) {
@@ -8,8 +8,14 @@ export function startAPIServer({ port = 3001 } = {}) {
     const router = new KoaRouter();
 
     router.get('/archive/run', (ctx, next) => {
+        const d = new Date('2010-08-05')
+        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+        const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
+        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+        const timestamp = Math.round((new Date()).getTime() / 1000);
+
         const from = getConfigState().backup.from;
-        const to = getConfigState().backup.to + '/test.zip'
+        const to = getConfigState().backup.to + `/full_${da}_${mo}_${ye}_${timestamp}.zip`
 
         try {
             archive(from, to);
@@ -25,7 +31,12 @@ export function startAPIServer({ port = 3001 } = {}) {
     router.get('/archive/info', (ctx, next) => {
         ctx.set('Content-Type', 'application/json');
 
-        ctx.body = JSON.stringify(getConfigState());
+        ctx.body = JSON.stringify({
+            ...getConfigState(),
+            local: {
+                archives: getLocalArchives()
+            }
+        });
     });
 
     router.get('/config/reset', (ctx, next) => {

@@ -8,6 +8,7 @@ async function poll() {
 
     renderLogs(info);
     renderStatus(info);
+    renderArchiveLists(info)
 
     if (info.compression.status === 'inactive') {
         document.querySelector('#backup-btn').removeAttribute('disabled');
@@ -23,6 +24,32 @@ function renderLogs(info) {
 
     document.querySelector('.logs').innerHTML = logs;
 }
+
+function renderArchiveLists(info) {
+    const localArchives = info.local.archives.map(i => {
+
+        return `<div class="log log-backup">
+                    <span class="name">${i}</span>
+                    - <span class="waiting">Tranfer queued</span> <span class="time">
+                    - 5 minutes ago
+                    <span class="delete">Delete</span>
+                </div>`;
+    }).join('');
+
+    document.getElementById('local-backups').innerHTML = localArchives;
+
+    const remoteArchives = info.remote.archives.map(i => {
+
+        return `<div class="log log-backup">
+                    <span class="name">${i.name}</span>
+                    - ${timeAgo(new Date(i.changed))}
+                    <span class="delete">Delete</span>
+                </div>`;
+    }).join('');
+
+    document.getElementById('remote-backups').innerHTML = remoteArchives;
+}
+
 function renderStatus(info) {
     const map = {
         inactive: 'Inactive',

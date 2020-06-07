@@ -3,9 +3,9 @@ import fs from 'fs';
 export function createInitialConfig() {
     return {
         samba: {
-            address: undefined,
-            username: 'guest', // not required, defaults to guest
-            password: '', // not required
+            address: '//192.168.1.2/j',
+            username: 'sebb', // not required, defaults to guest
+            password: ';awesome', // not required
             domain: 'WORKGROUP', // not required
             maxProtocol: 'SMB3' // not required
         },
@@ -30,6 +30,9 @@ export function createInitialConfig() {
             count: 0,
             backupCount: 3,
             type: 'full', // will support sync and combi later
+        },
+        remote: {
+            archives: []
         }
     };
 }

@@ -21,10 +21,32 @@
             <h3>Logs</h3>
             <div class="logs"></div>
 
-            <h3>Backup list</h3>
-            <div class="backups">
-                <div class="log log-backup"> <span class="name">full_02_07_06_2020.zip</span> - <span class="waiting">Queued</span> <span class="time">- 5 minutes ago</div>
-                <div class="log log-backup"> <span class="name">full_01_07_06_2020.zip</span> - <span class="transfered">Transfered</span> <span class="time">- 5 minutes ago</div>
+            <h3>Local backups</h3>
+            <div id="local-backups" class="backups">
+                <div class="log log-backup">
+                    <span class="name">full_02_07_06_2020.zip</span>
+                    - <span class="waiting">Tranfer queued</span> <span class="time">
+                    - 5 minutes ago
+                    <span class="delete">Delete</span>
+                </div>
+                <div class="log log-backup">
+                    <span class="name">full_02_07_06_2020.zip</span>
+                    - <span class="valid">Transfered</span> <span class="time">
+                    - 15 minutes ago
+                    <span class="delete">Delete</span>
+                </div>
+            </div>
+
+            <h3>Remote backups</h3>
+            <div id="remote-backups" class="backups">
+                <div class="log log-backup">
+                    <span class="name">full_02_07_06_2020.zip</span>
+                    <span class="delete">Delete</span>
+                </div>
+                <div class="log log-backup">
+                    <span class="name">full_02_07_06_2020.zip</span>
+                    <span class="delete">Delete</span>
+                </div>
             </div>
 
             <h3>Configure</h3>
