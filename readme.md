@@ -1,5 +1,25 @@
 
 
+
+# Next up
+ * Test compress large directory
+ * Make progress bar work
+ * Transfer file to samba
+ * Show transfer progress
+ * Validate transfered file hash
+ * Add progress meta, convert bytes to mb and gb when relevant
+
+ * Add restore option
+
+
+ * maintain a daily, a weekly and a monthly backup.
+
+
+
+
+
+
+
 # todo:
  * API methods
    * Configure
