@@ -24,8 +24,13 @@ function renderLogs(info) {
     document.querySelector('.logs').innerHTML = logs;
 }
 function renderStatus(info) {
+    const map = {
+        inactive: 'Currently inactive',
+        started: 'Running archiver...'
+    }
+
     document.querySelector('.status').innerHTML = `
-        <div>Status: <b>${info.compression.status}</b></span></div>
+        <div>Status: <b>${map[info.compression.status]}</b></span></div>
     `;
 }
 

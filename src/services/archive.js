@@ -47,7 +47,7 @@ export function archive(from, to) {
     // listen for all archive data to be written
     // 'close' event is fired only when a file descriptor is involved
     output.on('close', function() {
-        log('info', 'Completed compressing: "' + to + '"');
+        log('success', `Completed archiving ${to} with ${getCompressionState().last.total} files for a total of ${archive.pointer()} bytes.` );
         setCompressionState({ status: 'inactive' });
         console.log(archive.pointer() + ' total bytes');
         console.log('archiver has been finalized and the output file descriptor has closed.');

@@ -10,6 +10,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    font-family: monospace;
 }
 
 @import "./btn.css";
@@ -19,7 +20,7 @@ body {
     max-width: 800px;
     background-color: #eee;
     padding: 1rem;
-    margin: 0;
+    margin-bottom: 2rem;
     box-sizing: border-box;
 }
 
@@ -70,20 +71,45 @@ h1 small {
     display: inline-block;;
 }
 
-
-.actions {
+.progress {
+    height: 2rem;
+    border: 1px solid #aaa;
+    background-color: rgba(0,0,0, 0.5);
+    position: relative;
+    line-height: 2rem;
+    padding: 0 0.5rem;
+    text-transform: capitalize;
     margin-top: 1rem;
-    display: flex;
-    align-items: center;
+}
+
+.progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background-color: rgba(255,255,255, 0.5);
+}
+
+.progress-pct {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    height: 100%;
+}
+
+.progress-meta {
+    margin-top: 0;
 }
 
 .status {
-    border: 1px solid black;
-    margin: 0.5rem 0 ;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    text-transform: capitalize;
-    background-color: rgba(0,0,0, 0.05);
+    position: relative;
+}
+
+
+.actions {
+    display: flex;
+    align-items: center;
 }
 
 .config {
@@ -121,6 +147,8 @@ pre {
     margin: 0;
     padding: 1rem;
     background-color: rgba(0,0,0, 0.05);
+    max-height: 400px;
+    overflow: auto;
 }
 
 .log .time {
@@ -161,4 +189,9 @@ pre {
 .log.log-error:before {
     background-color: #b91422;
 }
+
+.log.log-success:before {
+    background-color: green;
+}
+
 
