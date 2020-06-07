@@ -7,7 +7,7 @@ Mean for server backup in a home setting.
 ![image](https://user-images.githubusercontent.com/870110/83979889-ec2afd80-a911-11ea-9eb8-47917e01e071.png)
 
 # Questions
- * Use tag for continues compression? (https://www.brendanlong.com/zip-vs-tar-for-compressed-archives.html)
+ * Use .tar.gz for cross file compression? (https://www.brendanlong.com/zip-vs-tar-for-compressed-archives.html) (and https://stackoverflow.com/questions/10540935/what-is-the-difference-between-tar-and-zip)
 
 # Next up
  * Test compress large directory
