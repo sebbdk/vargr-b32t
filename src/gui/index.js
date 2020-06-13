@@ -8,13 +8,75 @@ async function poll() {
 
     renderLogs(info);
     renderStatus(info);
-    renderArchiveLists(info)
+    renderArchiveLists(info);
+    renderProgress(info);
 
     if (info.compression.status === 'inactive') {
         document.querySelector('#backup-btn').removeAttribute('disabled');
     }
 
     document.getElementById('state').innerHTML = JSON.stringify(info, null, 4);
+}
+
+function renderProgress(info) {
+    if (!info.compression.last) {
+        document.querySelector('.progress-meta').style.display = "none";
+        document.querySelector('.progress-bar').style.display = "none";
+        document.querySelector('.progress-pct').style.display = "none";
+        return;
+    }
+
+    document.querySelector('.progress-meta').style.display = "";
+    document.querySelector('.progress-bar').style.display = "";
+    document.querySelector('.progress-pct').style.display = "";
+
+    const p = info.compression.last;
+    document.querySelector('.progress-meta').innerHTML = `${p.processed} / ${p.total} files and ${p.processedBytes} / ${p.totalBytes} bytes compressed`;
+
+    const pct = `${Math.round((p.processed / p.total) * 100)}%`;
+    document.querySelector('.progress-bar').style.width = pct;
+    document.querySelector('.progress-pct').innerHTML = pct;
+}
+
+function deleteArchive(fileName) {
+    if(!confirm('Are you sure?')) return;
+
+    fetch(baseUrl + '/archive/remove', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fileName
+        })
+    })
+}
+
+function transferArchive(fileName) {
+    if(!confirm('Are you sure?')) return;
+
+    fetch(baseUrl + '/archive/transfer', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fileName
+        })
+    })
+}
+
+function getTransferPct(info, i) {
+    const local = info.local.archives.find(l => l.name === i);
+    const remote = info.remote.archives.find(r => r.name === i);
+
+    if (local && remote) {
+        return local.size / remote.size;
+    }
+
+    return 0;
 }
 
 function renderLogs(info) {
@@ -28,15 +90,29 @@ function renderLogs(info) {
 function renderArchiveLists(info) {
     const localArchives = info.local.archives.map(i => {
 
+        const transferPct = getTransferPct(info, i);
+
         return `<div class="log log-backup">
-                    <span class="name">${i}</span>
+                    <span class="name">${i.name} <div class="transfered-pct" style="width: ${transferPct}%"></div></span>
                     - <span class="waiting">Tranfer queued</span> <span class="time">
-                    - 5 minutes ago
-                    <span class="delete">Delete</span>
+                    - X minutes ago
+                    <div class="log-actions">
+                        <span class="delete" data-archive="${i.name}">Delete</span>
+                        <span class="transfer" data-archive="${i.name}">Transfer</span>
+                    </div>
                 </div>`;
     }).join('');
 
     document.getElementById('local-backups').innerHTML = localArchives;
+    document.querySelectorAll('#local-backups .log-actions').forEach(e => {
+        e.querySelector('.delete').addEventListener('click', (evt) => {
+            deleteArchive(evt.target.getAttribute('data-archive'));
+        });
+
+        e.querySelector('.transfer').addEventListener('click', (evt) => {
+            transferArchive(evt.target.getAttribute('data-archive'));
+        });
+    });
 
     const remoteArchives = info.remote.archives.map(i => {
 
@@ -78,5 +154,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setInterval(() => {
         poll();
-    }, 2500)
+    }, 1000)
 });

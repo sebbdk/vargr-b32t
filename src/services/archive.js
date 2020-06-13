@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import archiver from 'archiver'
 import { getConfigState, setConfigState } from './config.js';
 
@@ -28,21 +29,52 @@ export function log(type, msg) {
     })
 }
 
-const backupsLocation = './data/to';
+const backupsLocation = './data/to/';
 export function getLocalArchives() {
-    return fs.readdirSync(backupsLocation);
+    return fs.readdirSync(backupsLocation).map(i => {
+        return {
+            name: i,
+            size: fs.statSync(backupsLocation + i).size
+        }
+    });
 }
 
-export function archive(from, to) {
+export function emptyTmpDir() {
+    const tmpDir = './data/tmp/';
+
+    fs.readdir(tmpDir, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            fs.unlink(path.join(tmpDir, file), err => {
+                if (err) throw err;
+            });
+        }
+    });
+}
+
+export function archive() {
     if (getCompressionState().status !== 'inactive') {
         log('error', 'Can only run once archiving process at a time!');
         throw(new Error('Can only run one compression at a time.'));
     }
 
+    const d = new Date('2010-08-05')
+    const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+    const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+    const timestamp = Math.round((new Date()).getTime() / 1000);
+
+    const from = getConfigState().backup.from;
+    const to = getConfigState().backup.to + `/full_${da}_${mo}_${ye}_${timestamp}.zip`
+    const tmpPath = `./data/tmp/full_${da}_${mo}_${ye}_${timestamp}.zip`;
+
+    emptyTmpDir();
+
     log('info', 'Started compression: "' + from + '" to "' + to + '"');
 
     // create a file to stream archive data to.
-    var output = fs.createWriteStream(to);
+    var output = fs.createWriteStream(tmpPath);
     var archive = archiver('zip', {
         zlib: {
             level: getConfigState().compression.level // Sets the compression level.
@@ -54,9 +86,16 @@ export function archive(from, to) {
     output.on('close', function() {
         const fileName = to.split('/').pop()
         log('success', `Completed archiving ${fileName} with ${getCompressionState().last.total} files for a total of ${archive.pointer()} bytes.` );
-        setCompressionState({ status: 'inactive' });
-        console.log(archive.pointer() + ' total bytes');
-        console.log('archiver has been finalized and the output file descriptor has closed.');
+        fs.rename(tmpPath, to, (err ) => {
+            console.log('Moved file', err )
+        });
+        setCompressionState({
+            status: 'inactive',
+            last: undefined
+        });
+        
+        //console.log(archive.pointer() + ' total bytes');
+        //console.log('archiver has been finalized and the output file descriptor has closed.');
     });
 
     // This event is fired when the data source is drained no matter what was the data source.
@@ -81,8 +120,10 @@ export function archive(from, to) {
     });
 
     archive.on('progress', function(entry) {
+        const fileName = to.split('/').pop()
         setCompressionState({
             last: {
+                fileName,
                 ...entry.entries,
                 ...entry.fs
             }

@@ -52,15 +52,6 @@ h1 small {
     position: relative;
 }
 
-.backups .delete {
-    position: absolute;
-    right: 0.5rem;
-    top: 0;
-    height: 100%;
-    line-height: 1.75rem;
-    cursor: pointer;
-}
-
 .backups .waiting {
     color: yellow;
     text-shadow: 0px 0px 5px rgba(0,0,0, 0.5);
@@ -103,6 +94,7 @@ h1 small {
     top: 0;
     height: 100%;
     width: 50%;
+    transition: width 300ms ease-in;
     background-color: rgba(255,255,255, 0.5);
 }
 
@@ -209,4 +201,22 @@ pre {
     background-color: green;
 }
 
+.log-actions {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    height: 100%;
+    line-height: 1.75rem;
+    cursor: pointer;
+}
 
+.transfered-pct {
+    width: 0;
+    opacity: 0.2;
+    width: 30%;
+    height: 100%;
+    background-color: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

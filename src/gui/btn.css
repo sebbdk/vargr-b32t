@@ -36,8 +36,8 @@
   margin-left: calc(var(--border-size) * -1);
 }
 
-.multi-button button:hover,
-.multi-button button:focus {
+.multi-button button:hover:not(:disabled),
+.multi-button button:focus:not(:disabled) {
   flex-grow: 2;
   color: white;
   outline: none;
@@ -59,4 +59,8 @@
 
 .multi-button button:active {
   transform: translateY(var(--border-size));
+}
+
+.multi-button button:disabled {
+  opacity: 0.5;
 }

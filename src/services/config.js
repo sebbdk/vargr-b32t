@@ -33,6 +33,9 @@ export function createInitialConfig() {
         },
         remote: {
             archives: []
+        },
+        local: {
+            archives: []
         }
     };
 }

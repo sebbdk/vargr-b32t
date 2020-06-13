@@ -8,19 +8,57 @@
         <div class="main">
             <div class="actions multi-button">
                 <button id="backup-btn">Backup</button>
-                <button id="transfer-btn">Transfer</button>
-                <button id="cancel-btn">Cancel</button>
             </div>
-
             <div class="progress">
-                <div class="progress-bar" style="width:35%"></div>
-                <div class="progress-pct">35%</div>
-                <div class="status"></div>
+                <div class="progress-bar" style="width:0%"></div>
+                <div class="progress-pct">
+                    <!-- 0% -->
+                </div>
+                <div class="status">
+                    <!-- Status: Inactive -->
+                </div>
             </div>
-            <p class="progress-meta">50 / 100 files and 767192 / 8361761 bytes compressed</p>
+            <p class="progress-meta">
+                <!-- 50 / 100 files and 767192 / 8361761 bytes compressed -->
+            </p>
 
             <h3>Logs</h3>
             <div class="logs"></div>
+
+            <h3>Configure</h3>
+            <div>
+                <div class="config">
+                    <div class="config-field">
+                        <label>Samba address</label>
+                        <input type="text" name="address" placeholder="Samba address" />
+                    </div>
+                    <div class="config-field">
+                        <label>Network domain</label>
+                        <input type="text" name="domain" placeholder="Samba domain" />
+                    </div>
+                    <div class="config-field">
+                        <label>Samba Username</label>
+                        <input type="text" name="username" placeholder="Samba username (optional)" />
+                    </div>
+                    <div class="config-field">
+                        <label>Samba password</label>
+                        <input type="text" name="password" placeholder="Samba password (optional)" />
+                    </div>
+
+                    <div class="multi-button">
+                        <button id="update-btn">Update credentials</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main">
+            <div class="actions multi-button">
+                <button id="backup-btn">Backup</button>
+                <button id="transfer-btn">Transfer</button>
+                <button id="cancel-btn">Cancel</button>
+            </div>
 
             <h3>Local archives</h3>
             <div id="local-backups" class="backups">
@@ -50,33 +88,7 @@
                 </div>
             </div>
 
-            <h3>Configure</h3>
-            <div>
-                <div class="config">
-                    <div class="config-field">
-                        <label>Samba address</label>
-                        <input type="text" name="address" placeholder="Samba address" />
-                    </div>
-                    <div class="config-field">
-                        <label>Network domain</label>
-                        <input type="text" name="domain" placeholder="Samba domain" />
-                    </div>
-                    <div class="config-field">
-                        <label>Samba Username</label>
-                        <input type="text" name="username" placeholder="Samba username (optional)" />
-                    </div>
-                    <div class="config-field">
-                        <label>Samba password</label>
-                        <input type="text" name="password" placeholder="Samba password (optional)" />
-                    </div>
 
-                    <div class="multi-button">
-                        <button id="update-btn">Update</button>
-                        <button id="reset-btn">Reset</button>
-                    </div>
-                </div>
-
-            </div>
 
             <b>Debug state</b>
             <pre id="state"></pre>

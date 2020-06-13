@@ -1,4 +1,5 @@
 import SambaClient from 'samba-client';
+import { exec, spawn } from 'child_process';
 import { getConfigState, setConfigState } from './config.js';
 
 const sleep = (milliseconds) => {
@@ -25,13 +26,14 @@ export function parseDirString(data) {
     return data.split('\n').filter(i => i.match(/\w*.zip/gm)).map(i => {
         return {
             name: i.match(/\w*.zip/gm).shift(),
-            changed: i.match(/\w{3}\s\w{3}\s*\d{1,2}\s*\d{1,2}:\d{1,2}:\d{1,2}\s\d{4}/gm)
+            changed: i.match(/\w{3}\s*\w{3}\s*\d{1,2}\s\d{1,2}\:\d{1,2}\:\d{1,2}\s\d{4}/gm).shift(),
+            size: parseInt((/(\d*)\s*\w{3}\s*\w{3}\s*\d{1,2}\s\d{1,2}\:\d{1,2}\:\d{1,2}\s\d{4}/gm).exec(i)[1], 10)
         }
     });
 }
 
 export async function pollRemoteDir() {
-    console.log('POLL!');
+    //console.log('POLL!');
 
     try {
         const remoteDir = await getRemoteDir();
@@ -58,7 +60,7 @@ export async function pollRemoteDir() {
 }
 
 export async function getRemoteDir() {
-    console.log(getConfigState().samba)
+    //console.log(getConfigState().samba)
 
     const client = new SambaClient({
         address: getConfigState().samba.address,
@@ -72,17 +74,69 @@ export async function getRemoteDir() {
     return await client.dir('');
 }
 
-export async function transfer(file) {
+export async function transfer(fileName) {
     const client = new SambaClient({
-        address, // required
-        username, // not required, defaults to guest
-        password, // not required
+        address: getConfigState().samba.address,
+        username: getConfigState().samba.username, // not required, defaults to guest
+        password: getConfigState().samba.password, // not required
         domain: 'WORKGROUP', // not required
         maxProtocol: 'SMB3' // not required
-    })
+    });
 
-    // Gets list of files in folder
-    return await client.sendFile('./0jzp5kf9d8v41.jpg', '0jzp5kf9d8v41.jpg');
+    return new Promise((resolve) => {
+        const cmdString = `curl`;
+
+
+        const cmd = spawn(cmdString, ['--upload-file', `./data/to/${fileName}`, '-u', 'WORKGROUP/sebb:;awesome', `smb://192.168.1.2/j/${fileName}`]);
+
+        cmd.stdout.on('data', (data) => {
+          console.log(`!!-----stdout`);
+          console.log(`${data}`);
+        });
+        
+        let stderbuffer = Buffer.from('');
+        cmd.stderr.on('data', (data) => {
+            
+            stderbuffer = Buffer.concat([stderbuffer, data]);
+            console.log('----')
+            console.log(stderbuffer.toString())
+            let r = stderbuffer.toString().split('\n').pop().replace(/\s+/gm, '_').split('_').slice(1, -1)
+            console.log("pct", r);
+/*
+            stderbuffer += data.toString();
+            console.log(`${stderbuffer.replace(/\s+/gm, '_').split('_')}`);
+            console.log(`${stderbuffer}`, stderbuffer.indexOf('\n'));
+            if ( stderbuffer.indexOf('\n') > -1) {
+          
+                stderbuffer = '';
+                return;
+            }
+*/
+            
+        });
+        
+        cmd.on('close', (code) => {
+          console.log(`child process exited with code ${code}`);
+        });
+
+        /*
+        exec(cmd, async (error, stdout, stderr) => {
+            console.log('!')
+
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+
+            console.log(`stdout: ${stdout}`);
+        });
+        */
+    })
 }
 
 // https://www.npmjs.com/package/samba-client
