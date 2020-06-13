@@ -1,8 +1,9 @@
-FROM node:lts-alpine3.9
+FROM arm64v8/node:14.4.0
 ENV NODE_ENV=production
 
-RUN apk add --no-cache curl
-RUN apk add --no-cache samba
+RUN apt-get update && apt-get install -y \
+  samba \
+  curl
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
