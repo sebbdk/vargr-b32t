@@ -3,9 +3,9 @@ node_modules
 .DS_Store
 data/from
 data/to
-data/samba.json
+data/config/samba.json
+data/config/config.json
 .cache
 .tmp
 dist
-data/config.json
 yarn-error.log

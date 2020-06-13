@@ -7,6 +7,9 @@ Meant for server backup in a home setting.
 
 Go to your host at port 3000 and configure your samba credentials and other settings.
 
+If you are using this with docker, mount the folder to be back up to ´/home/node/app/data/from´
+You can also persist the credentials/configs by mounting ´/home/node/app/data/config´.
+
 ## Preview
 
 ![image](https://user-images.githubusercontent.com/870110/84577175-4288b800-adba-11ea-82a1-27df3d11c7db.png)

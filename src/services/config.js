@@ -9,7 +9,7 @@ export function createInitialConfig() {
         maxProtocol: 'SMB3' // not required
     };
 
-    const sambaConfigPath = './data/samba.json';
+    const sambaConfigPath = './data/config/samba.json';
     if (fs.existsSync(sambaConfigPath)) {
         const rawdata = fs.readFileSync(sambaConfigPath);
         samba = JSON.parse(rawdata);
@@ -79,5 +79,5 @@ export function resetConfig() {
     setConfigState(createInitialConfig());
 }
 
-const configFilePath = './data/config.json';
+const configFilePath = './data/config/config.json';
 let state = initConfig();
