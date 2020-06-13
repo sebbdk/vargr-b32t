@@ -25,7 +25,7 @@
             <h3>Logs</h3>
             <div class="logs"></div>
 
-            <h3>Configure</h3>
+            <h3>Configuration</h3>
             <div>
                 <div class="config">
                     <div class="config-field">
@@ -42,25 +42,20 @@
                     </div>
                     <div class="config-field">
                         <label>Samba password</label>
-                        <input type="text" name="password" placeholder="Samba password (optional)" />
+                        <input type="password" name="password" placeholder="Samba password (optional)" />
                     </div>
 
                     <div class="multi-button">
-                        <button id="update-btn">Update credentials</button>
+                        <button id="update-btn">Update</button>
                     </div>
+                    <small>Connection status unknown</small>
                 </div>
             </div>
         </div>
 
 
         <div class="main">
-            <div class="actions multi-button">
-                <button id="backup-btn">Backup</button>
-                <button id="transfer-btn">Transfer</button>
-                <button id="cancel-btn">Cancel</button>
-            </div>
-
-            <h3>Local archives</h3>
+            <h3>Local directory</h3>
             <div id="local-backups" class="backups">
                 <div class="log log-backup">
                     <span class="name">full_02_07_06_2020.zip</span>
@@ -76,7 +71,7 @@
                 </div>
             </div>
 
-            <h3>//shish-kebab/my-share archives</h3>
+            <h3>Remote directory</h3>
             <div id="remote-backups" class="backups">
                 <div class="log log-backup">
                     <span class="name">full_02_07_06_2020.zip</span>
@@ -87,11 +82,15 @@
                     <span class="delete">Delete</span>
                 </div>
             </div>
+        </div>
 
 
-
+        <div class="main">
             <b>Debug state</b>
             <pre id="state"></pre>
+            <div class="actions multi-button">
+                <button id="reset-btn">Reset state and logs</button>
+            </div>
         <div>
 
         <link rel="stylesheet" href="styles.css">

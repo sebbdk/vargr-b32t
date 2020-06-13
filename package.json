@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --ignore './data' --ignore './src/gui' ./index.js",
-    "test": "test",
+    "dev": "npm run gui-dev & nodemon --ignore './data' --ignore './src/gui' ./index.js",
+    "start": "parcel build src/gui/index.html && node index.js",
     "gui-dev": "parcel -p 3000 watch  src/gui/index.html"
   },
   "keywords": [
@@ -28,6 +28,7 @@
     "koa": "^2.12.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^9.0.1",
+    "koa-static": "^5.0.0",
     "nodemon": "^2.0.4",
     "onezip": "^4.2.0",
     "parcel-bundler": "^1.12.4",

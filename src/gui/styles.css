@@ -126,6 +126,20 @@ h1 small {
     margin-bottom: 1rem;
 }
 
+.config small {
+    margin-top:  0.5rem;
+    text-align: right;
+    display: block;
+}
+
+.config small.error {
+    color: tomato;
+}
+
+.config small.success {
+    color: green;
+}
+
 .config-field label {
     display: block;
 }

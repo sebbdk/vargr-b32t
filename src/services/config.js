@@ -1,14 +1,22 @@
 import fs from 'fs';
 
 export function createInitialConfig() {
+    let samba = {
+        address: '//1.1.1.1/j',
+        username: 'guest', // not required, defaults to guest
+        password: '', // not required
+        domain: 'WORKGROUP', // not required
+        maxProtocol: 'SMB3' // not required
+    };
+
+    const sambaConfigPath = './data/samba.json';
+    if (fs.existsSync(sambaConfigPath)) {
+        const rawdata = fs.readFileSync(sambaConfigPath);
+        samba = JSON.parse(rawdata);
+    }
+
     return {
-        samba: {
-            address: '//192.168.1.2/j',
-            username: 'sebb', // not required, defaults to guest
-            password: ';awesome', // not required
-            domain: 'WORKGROUP', // not required
-            maxProtocol: 'SMB3' // not required
-        },
+        samba,
         compression: {
             level: 9, // Sets the compression level.
             status: 'inactive',
