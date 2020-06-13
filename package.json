@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npm run gui-dev & nodemon --ignore './data' --ignore './src/gui' ./index.js",
     "start": "parcel build src/gui/index.html && ls -la && node --version && node index.js",
-    "gui-dev": "parcel -p 3000 watch  src/gui/index.html"
+    "gui-dev": "parcel -p 3001 watch  src/gui/index.html"
   },
   "keywords": [
     "rsync",
