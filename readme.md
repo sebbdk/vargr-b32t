@@ -9,7 +9,7 @@ Go to your host at port 3000 and configure your samba credentials and other sett
 
 ## Preview
 
-![image](https://user-images.githubusercontent.com/870110/83979889-ec2afd80-a911-11ea-9eb8-47917e01e071.png)
+![image](https://user-images.githubusercontent.com/870110/84577175-4288b800-adba-11ea-82a1-27df3d11c7db.png)
 
 ## Usage
 
