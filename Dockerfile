@@ -1,9 +1,10 @@
-FROM arm64v8/node:14.4.0
+FROM arm32v7/node:14.4-slim
 ENV NODE_ENV=production
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \ 
   samba \
-  curl
+  curl \
+  python
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
