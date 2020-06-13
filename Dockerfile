@@ -1,4 +1,4 @@
-FROM node:14.4.0-alpine3.10
+FROM node:lts-alpine3.9
 ENV NODE_ENV=production
 
 RUN apk add --no-cache curl
