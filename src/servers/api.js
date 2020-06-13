@@ -57,7 +57,7 @@ async function startBackupAndTransfer() {
   }
 }
 
-export function startAPIServer({ port = 3001 } = {}) {
+export function startAPIServer({ port = 3000 } = {}) {
   const app = new Koa();
   const router = new KoaRouter();
 
