@@ -7,7 +7,8 @@
         <h1>B32T Backup <small>(Alpha)</small></h1>
         <div class="main">
             <div class="actions multi-button">
-                <button id="backup-btn">Backup</button>
+                <button id="backup-btn">Backup now</button>
+                <button id="archive-btn">Archive now</button>
             </div>
             <div class="progress">
                 <div class="progress-bar" style="width:0%"></div>
@@ -53,7 +54,7 @@
             </div>
         </div>
 
-
+        <h1>Archives</h1>
         <div class="main">
             <h3>Local directory</h3>
             <div id="local-backups" class="backups">
@@ -84,9 +85,8 @@
             </div>
         </div>
 
-
+        <h1>Debug</h1>
         <div class="main">
-            <b>Debug state</b>
             <pre id="state"></pre>
             <div class="actions multi-button">
                 <button id="reset-btn">Reset state and logs</button>

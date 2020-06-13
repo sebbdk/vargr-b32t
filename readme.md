@@ -6,23 +6,17 @@ Mean for server backup in a home setting.
 ## Preview
 ![image](https://user-images.githubusercontent.com/870110/83979889-ec2afd80-a911-11ea-9eb8-47917e01e071.png)
 
+# Upcoming features
+ - Recover from backup
+   - Could conflict with other running containers and file permissions.
+ - Auto run backups at 00:00
+ - Use .tar.gz for archives
+ - Retry transfer later if remote was not available at transfer time
+ - Add Option to keep only one daily, weekly and monthly backup.
+ - Archive transfer progress
+
 # Questions
  * Use .tar.gz for cross file compression? (https://www.brendanlong.com/zip-vs-tar-for-compressed-archives.html) (and https://stackoverflow.com/questions/10540935/what-is-the-difference-between-tar-and-zip)
-
-# Next up
- * Test compress large directory
- * Make progress bar work
- * Transfer file to samba
- * Show transfer progress
- * Validate transfered file hash
- * Add progress meta, convert bytes to mb and gb when relevant
-
- * Add restore option
-
-
- * maintain a daily, a weekly and a monthly backup.
-
-
 
 
 

@@ -12,8 +12,15 @@ async function poll() {
   renderProgress(info);
   renderConnectionStatus(info);
 
-  if (info.compression.status === "inactive") {
-    document.querySelector("#backup-btn").removeAttribute("disabled");
+  document.querySelector("#backup-btn").removeAttribute("disabled");
+  document.querySelector("#archive-btn").removeAttribute("disabled");
+
+  if (info.compression.status !== "inactive") {
+    document.querySelector("#backup-btn").setAttribute("disabled", "true");
+
+    if (info.compression.status === 'archiving') {
+      document.querySelector("#archive-btn").setAttribute("disabled", "true");
+    }
   }
 
   document.getElementById("state").innerHTML = JSON.stringify(info, null, 4);
@@ -188,8 +195,16 @@ document.addEventListener("DOMContentLoaded", () => {
   poll();
 
   document.querySelector("#backup-btn").addEventListener("click", async () => {
+    if (!confirm("Are you sure?")) return;
     document.querySelector("#backup-btn").setAttribute("disabled", "true");
     await fetch(baseUrl + "/backup/now");
+    poll();
+  });
+
+  document.querySelector("#archive-btn").addEventListener("click", async () => {
+    if (!confirm("Are you sure?")) return;
+    document.querySelector("#archive-btn").setAttribute("disabled", "true");
+    await fetch(baseUrl + "/archive/now");
     poll();
   });
 

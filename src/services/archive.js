@@ -87,27 +87,18 @@ export function archive() {
     // 'close' event is fired only when a file descriptor is involved
     output.on("close", function () {
       const fileName = to.split("/").pop();
-      log(
-        "success",
-        `Completed archiving ${fileName} with ${
-          getCompressionState().last.total
-        } files for a total of ${archive.pointer()} bytes.`
-      );
+      const msg = `Completed archiving ${fileName} with ${getCompressionState().last.total} files for a total of ${archive.pointer()} bytes.`;
+
       fs.rename(tmpPath, to, (err) => {
-        console.log("Moved file", err);
+        log("success", msg);
         resolve(to);
       });
-
-      //console.log(archive.pointer() + ' total bytes');
-      //console.log('archiver has been finalized and the output file descriptor has closed.');
     });
 
     // This event is fired when the data source is drained no matter what was the data source.
     // It is not part of this library but rather from the NodeJS Stream API.
     // @see: https://nodejs.org/api/stream.html#stream_event_end
-    output.on("end", function () {
-      console.log("Data has been drained");
-    });
+    output.on("end", function () {});
 
     archive.pipe(output);
 

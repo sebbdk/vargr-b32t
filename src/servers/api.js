@@ -17,12 +17,30 @@ import {
 } from "../services/config.js";
 import { transfer } from "../services/samba.js";
 
+async function startArchiving() {
+  try {
+    if (getCompressionState().status !== "inactive") {
+      log("info", "Can only run once backup process at a time!");
+      return;
+    }
+
+    setCompressionState({ status: "archiving" });
+    await archive();
+    setCompressionState({ status: "inactive", last: undefined });
+  } catch (err) {
+    console.error(err);
+    log("error", err.toString());
+    setCompressionState({ status: "inactive", last: undefined });
+  }
+}
+
 async function startBackupAndTransfer() {
   try {
     if (getCompressionState().status !== "inactive") {
       log("info", "Can only run once backup process at a time!");
       return;
     }
+    log("success", "Started backup!");
 
     setCompressionState({ status: "archiving" });
     const archivePath = await archive();
@@ -43,12 +61,16 @@ export function startAPIServer({ port = 3001 } = {}) {
   const app = new Koa();
   const router = new KoaRouter();
 
-  router.get("/archive/run", (ctx, next) => {
-    archive();
+  router.get("/archive/now", (ctx, next) => {
+    startArchiving();
     ctx.body = JSON.stringify(getCompressionState());
   });
 
   router.get("/backup/now", (ctx, next) => {
+    if (getCompressionState().status !== "inactive") {
+      log("info", "Can only run once backup process at a time!");
+      return;
+    }
     startBackupAndTransfer();
     ctx.body = JSON.stringify(getCompressionState());
   });
@@ -113,5 +135,5 @@ export function startAPIServer({ port = 3001 } = {}) {
     .use(router.allowedMethods());
 
   app.listen(port);
-  console.log("Listening on port: " + port);
+  console.info("Listening on port: " + port);
 }
