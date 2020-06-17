@@ -18,7 +18,7 @@ export function createInitialConfig() {
     return {
         samba,
         compression: {
-            level: 9, // Sets the compression level.
+            level: 2, // Sets the compression level.
             status: 'inactive',
             logs: [
                 {

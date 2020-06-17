@@ -4,7 +4,11 @@ ENV NODE_ENV=production
 RUN apt-get update && apt-get install -y \ 
   samba \
   curl \
+  make \
+  gcc \
+  g++ \
   python
+
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
