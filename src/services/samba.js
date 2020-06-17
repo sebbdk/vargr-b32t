@@ -85,7 +85,7 @@ export async function getRemoteDir() {
 export async function transfer(filePath) {
   const fileName = filePath.split("/").pop();
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     log('info', 'Started transfering archive to remote');
     const cmdString = `curl`;
     const cmd = spawn(cmdString, [
