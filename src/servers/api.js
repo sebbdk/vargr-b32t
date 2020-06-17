@@ -9,6 +9,7 @@ import {
   archive,
   getLocalArchives,
   log,
+  prepareTmpDir,
 } from "../services/archive.js";
 import {
   getConfigState,
@@ -89,6 +90,7 @@ export function startAPIServer({ port = 3000 } = {}) {
   router.get("/config/reset", (ctx, next) => {
     ctx.set("Content-Type", "application/json");
     resetConfig();
+    prepareTmpDir();
     ctx.body = JSON.stringify(getConfigState());
   });
 
@@ -112,7 +114,7 @@ export function startAPIServer({ port = 3000 } = {}) {
   });
 
   router.post("/archive/transfer", (ctx, next) => {
-    transfer(ctx.request.body.fileName);
+    transfer(`./data/to/${ctx.request.body.fileName}`);
   });
 
   app
