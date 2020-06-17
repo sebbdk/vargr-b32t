@@ -21,6 +21,14 @@ ENV NODE_ENV production
 RUN yarn install --ignore-optional --prod
 COPY --chown=node:node . .
 
+RUN apt-get remove -y \
+  samba \
+  curl \
+  make \
+  gcc \
+  g++ \
+  python
+
 COPY . .
 
 EXPOSE 3000
