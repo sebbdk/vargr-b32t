@@ -30,8 +30,8 @@ export function createInitialConfig() {
         },
         backup: {
             status: 'inactive',
-            from: './data/from',
-            to: './data/to',
+            from: './data/from/',
+            to: './data/to/',
             intervals: 24 * 60 * 60, // 24 hours
             time: 0, // seconds since the day starts
             lastBackupTime: 0, // Timestamp
