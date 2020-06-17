@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
   make \
   gcc \
   g++ \
-  python
+  python \
+  samba-client
 
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
