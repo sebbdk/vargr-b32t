@@ -1,14 +1,15 @@
 FROM arm32v7/node:14.4-slim
 ENV NODE_ENV=production
 
-RUN apt-get update && apt-get install -y \ 
+RUN apt-get update && apt-get install -y \
   samba \
   curl \
   make \
   gcc \
   g++ \
-  python \
-  samba-client
+  python
+
+run apt-get install samba-client
 
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
@@ -21,13 +22,13 @@ ENV NODE_ENV production
 RUN yarn install --ignore-optional --prod
 COPY --chown=node:node . .
 
-RUN apt-get remove -y \
-  samba \
-  curl \
-  make \
-  gcc \
-  g++ \
-  python
+#RUN apt-get remove -y \
+#  samba \
+#  curl \
+#  make \
+#  gcc \
+#  g++ \
+#  python
 
 COPY . .
 
