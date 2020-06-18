@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
   g++ \
   python
 
-run apt-get install samba-client
+run apt-get install samba-client -y
 
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
